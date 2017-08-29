@@ -1,5 +1,15 @@
 # `functional_notations`, a utility abusing Python @ symbol for the greater good
 
+Why are we doing this? 
+
+For someone familiar with Mathematica's notation, it is very hard to live without the prefix function notation:
+
+```mathematica
+F @ log @ [array...]
+```
+
+For details of `prefix`, `intrafix`, `postfix` notations and other goodies, take a look at this comprehensive Mathematica.stackexchange wiki: [what-are-the-most-common-pitfalls-awaiting-new-users](https://mathematica.stackexchange.com/questions/18393/what-are-the-most-common-pitfalls-awaiting-new-users/25616#25616)
+
 ## Todo
 - [ ] Write examples and glorify `functional_notations`'s abusive usage
 
