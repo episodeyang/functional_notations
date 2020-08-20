@@ -1,1 +1,1 @@
-from .functional_notations import _F, F
+from .functional_notations import _F, F, prefixmethod

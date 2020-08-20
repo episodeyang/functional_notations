@@ -1,3 +1,6 @@
+from functools import partialmethod
+
+
 class _F():
     """
     meta class. When used as a decorator, decorates the function input to
@@ -7,7 +10,7 @@ class _F():
     ```
     """
 
-    def __init__(self, fn, name=None):
+    def __init__(self, fn, name=None, method=False):
         try:
             self.__name__ = name or fn.__name__
         except:
@@ -29,7 +32,7 @@ class _F():
     def __matmul__(self, other):
         if hasattr(other, '__call__'):
             name = "{} @ {}".format(self.__name__, other.__name__)
-            return _F(lambda x: self.fn(other(x)), name=name)
+            return _F(lambda *args, **kwargs: self.fn(other(*args, **kwargs)), name=name)
         return self.fn(other)
 
     def __call__(self, *args, **kwargs):
@@ -37,13 +40,21 @@ class _F():
 
 
 @_F
-def F(f):
-    if hasattr(f, '__call__'):
-        _ = _F(f)
+def F(fn):
+    if hasattr(fn, '__call__'):
+        _ = _F(fn)
         try:
             _.__name__ = f.__name__
         except:
             _.__name__ = "F"
         return _
     else:
-        return f
+        return fn
+
+
+def prefixmethod(fn):
+    """ decorator that supports class methods. """
+    return partialmethod(_F, fn)
+
+# this means fn is a class method that requires `self` as the
+# first positional argument.
